@@ -37,10 +37,25 @@ public class Ex02 {
         // nie możemy testować: if (x == Double.NaN) nigdy nie będzie do prawda
         // wszystkie wartości NaN są uznawane za różne od siebie
         // można testować za pomocą metody: if (Double.isNaN(x))
-        // char - jednostki (znaki) Unicode
+        // char - znaki Unicode, a dokładniej 16-bitowe code units w kodowaniu UTF-16
+        // char to 2 bajty
         // niektóre znaki Unicode wymagają dwóch wartości char
-        // literały, np. 'A' to stała o wartości 65
-        // możemy zapisywać jako wartości hex od \u0000 do \uFFFF
+        // literały, np. 'A' to stała o wartości 65 - szesnastkowo \u0041
+        // code points podzielone są na 17 code planes
+        // możemy zapisywać jako wartości hex od \u0000 do \uFFFF - multilingual plane, te znaki to code units
+        // pozostałe code planes - od \u10000 do \u10FFFF
+        // znaki z pozostałych code planes są zakodowane jako pary code units
+        // w multilingual plane jest 2048 nieużywanych wartości - surrogates area
+        // każdy z pary code units jest kodowany taką wartością
+        // dla pierwszego code unit od \ud800 do \udbff
+        // dla drugiego code unit od \udc00 do \udfff
+        // dzięki temu można ocenić z jakim znakiem mamy do czynienia
+        // z pojedynczym znakiem lub jedną ze składowych pary
+        // np. kodowanie oktonionu (wielkie pisane O), mamy code point \u1d546
+        // zakodowany za pomocą pary \ud835 oraz \udd46
+        // algorytm dekodowania: https://en.wikipedia.org/wiki/UTF-16
+        // char używamy tylko do manipulowania code units UTF-16
+        // do pracy ze znakami lepiej używać stringa
         // dla przykładu TM i pi
         System.out.println('\u2122');
         System.out.println('\u03c0');
@@ -60,6 +75,7 @@ public class Ex02 {
         System.out.println("\u0022+\u0022");
         // uwaga na sekwencje u w komentarzach, samo u bez czterech cyfr wywoła błąd
         // jeśli jest prawdziwa wartość po u, to zostanie ona zignorowana
-        // s. 51 - 3.3.4 Unicode and the char Type
+        // nie konwersji między bool i int
+        // if wymaga bool expression, np. x = 0 nie może być przekonwertowane do wartości bool
     }
 }
