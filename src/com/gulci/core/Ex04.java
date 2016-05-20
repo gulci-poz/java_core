@@ -89,32 +89,41 @@ public class Ex04 {
         System.out.println("last " + china.charAt(china.length() - 1));
         System.out.println("last " + china.charAt(china.length() - 2));
 
-        // i-ty code point
+        // sout + tab
+        // shift + enter - nowa linia after
+        // ctrl + alt + enter - nowa linia before
+        // ctrl + d - duplikacja linii lub zaznaczonego fragmentu
+        // ctrl + y - usunięcie linii
+        // shift + alt + up/down - przesunięcie linii
+        // shift + ctrl + up/down - przesunięcie bloku
+
+        // i-ty code point; nasz cp jest w tym przypadku na końcu
         int index = china.offsetByCodePoints(0, cpCount - 1);
         int cp = china.codePointAt(index);
         System.out.println("cp " + cp);
 
+        // sprawdzanie czy code unit jest surogatem, jedną z dwóch części code point
         System.out.println(Character.isSurrogate(china.charAt(index)) + " " + index);
         System.out.print(Character.isSurrogate(china.charAt(china.length() - 2)));
         System.out.println(" " + (china.length() - 2));
         System.out.print(Character.isSurrogate(china.charAt(china.length() - 1)));
         System.out.println(" " + (china.length() - 1));
 
-        System.out.println(Character.isSupplementaryCodePoint(china.charAt(index)) + " " + index);
-        System.out.print(Character.isSupplementaryCodePoint(china.charAt(china.length() - 2)));
-        System.out.println(" " + (china.length() - 2));
-        System.out.print(Character.isSupplementaryCodePoint(china.charAt(china.length() - 1)));
-        System.out.println(" " + (china.length() - 1));
+        // sprawdzanie czy dany znak jest niestandardowym znakiem
+        System.out.print(Character.isSupplementaryCodePoint(china.codePointAt(index)));
+        System.out.println(" " + index);
+        System.out.println(Character.isSupplementaryCodePoint(china.codePointAt(0)) + " 0");
 
         int[] codePoints = china.codePoints().toArray();
         for (int i = 0; i < codePoints.length; i ++) {
-            // rzutowanie na char code point, który nie jest prostym code unit da kiepski rezultat
-            System.out.println((char) codePoints[i]);
+            // toChars() zwraca tablicę (dwa code unit dla code point)
+            System.out.println(codePoints[i] + ": " + new String(Character.toChars(codePoints[i])));
         }
+
         String cpString = new String(codePoints, 0, codePoints.length);
         System.out.println(cpString);
 
-        // powtórzyć przykład z isSupplementaryCodePoint i isSurrogate
+        // powtórzyć przykład z isSupplementaryCodePoint i is Surrogate
         // s. 71 - 3.6.7 The String API
     }
 }
